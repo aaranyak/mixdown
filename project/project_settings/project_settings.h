@@ -12,9 +12,12 @@
  * Other settings
  */
 // Author - Aaranyak Ghosh
+#ifndef PROJECTSETTINGS_H /* Header Guard */
+#define PROJECTSETTINGS_H
 #include "time_signature.h"
 /* ProjectSettings object */
 typedef struct ProjectSettings {
     TimeSignature time_signature;
     int length;
 } ProjectSettings;
+#endif
