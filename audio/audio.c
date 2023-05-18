@@ -7,7 +7,13 @@ int open_audio_device(snd_pcm_t **handle, /* Pcm device handle, remember to run 
                       int play_audio) /* Set to 1 if used for playing audio, otherwise set 0 */
 {
     /* Opens a ALSA pcm audio device */
-    int status = snd_pcm_open(handle, "default", SND_PCM_STREAM_PLAYBACK, 0);
+    int status; /* Error Status */
+    snd_pcm_stream_t stream_type = SND_PCM_STREAM_CAPTURE; /* Record/Play audio */
+    if (play_audio) stream_type = SND_PCM_STREAM_PLAYBACK; /* If stream type is play, set it */
+    status = snd_pcm_open(handle, device_name, stream_type, 0);
+    if (status < 0) { /* If error occured while opening device */
+        fprintf(stderr, "Error while opening audio device %s: %s\n", device_name,snd_strerror(status));
+    }
     return status;
 }
 
