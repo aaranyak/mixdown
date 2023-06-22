@@ -5,6 +5,11 @@
 #include <gtk/gtk.h>
 #include <string.h>
 #include "../../project/project.h"
+#include "view_context/view_context.h"
+#include "view_context/initialize_context.h"
+#include "control_panel.h"
+static ViewContext view_context; /* State of the tracks view */
+
 GtkWidget *tracks_view(Project *current_project) {
     /* This will return the main view when a project is opened
      * The view will contain:
@@ -12,9 +17,19 @@ GtkWidget *tracks_view(Project *current_project) {
      *   - The sidebar will contain the track names and volume controls
      *   - The top bar will have play/pause buttons, and some basic settings
      */
-    GtkWidget *view_container; /* Contains the entire tracks view */
-    GtkWidget *placeholder;
-    view_container = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0); /* Create Side Panes */
     
+    // Declare widgets
+    GtkWidget *view_container; /* Contains the entire tracks view */
+    GtkWidget *top_control_panel; /* Top panel widget */
+    GtkWidget *placeholder;
+
+    // Before loading view
+    init_context(&view_context, current_project); /* Init tracks view state */ 
+    
+    // Load tracks view
+    view_container = gtk_box_new(GTK_ORIENTATION_VERTICAL /* Vertical packing */, 0); /* Create the container widget for the entire view */
+    gtk_widget_set_size_request(view_container, 1050, 600); /* Set minimum size to 1050px/600px; ratio 7:4 */
+    top_control_panel = control_panel(&view_context); /* Control panel with play/pause buttons etc. */
+    gtk_box_pack_start(GTK_BOX(view_container), top_control_panel, 0, 0, 0) /* Add the top control panel */;
     return view_container;
 }

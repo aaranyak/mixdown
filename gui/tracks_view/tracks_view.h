@@ -2,7 +2,7 @@
  *Header file for tracks_view.c
 */
 // Author - Aaranyak Ghosh
-#ifndef TRACKSVIEW_H
+#ifndef TRACKSVIEW_H /* Header Guard */
 #define TRACKSVIEW_H
 #include <gtk/gtk.h>
 #include <string.h>

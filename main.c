@@ -7,9 +7,7 @@ Project current_project;
 static void start(GtkApplication *app, gpointer uset_data)
 {
     /* Function called when app starts */
-    current_project.name = "untitled_1.mdp"; /* Set new project name */
-    current_project.path = NULL;
-    current_project.is_saved = 0; /* New project - Not yet saved */
+    init_project(&current_project);
     open_project_window(app, &current_project); /* Open the new project */
 }
 
