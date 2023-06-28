@@ -1,6 +1,7 @@
 /* Contains function for initializing tracks view state */
 #include "view_context.h"
 #include "stdio.h"
+#include "init_track_states.h"
 // Author: Aaranyak Ghosh
 void init_context(ViewContext *view_context, Project *project) {
     /* Initializes ViewContext object 
@@ -8,4 +9,5 @@ void init_context(ViewContext *view_context, Project *project) {
      */
     view_context->project = project; /* Set project of context object to current project */
     view_context->state = PAUSE; /* Set initial state to paused */
+    init_track_states(view_context); /* Initialize all track state managers */
 }

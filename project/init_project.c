@@ -5,6 +5,9 @@
 */
 // Author: Aaranyak Ghosh
 #include "project.h"
+#include "tracks/tracks.h"
+#include <stdlib.h>
+
 void init_project(Project *project) {
     /* Initializes empty project and sets to default values */
     char *name = "untitled_1.mdp";
@@ -25,6 +28,12 @@ void init_project(Project *project) {
     project->project_settings.audio_settings = audio_settings; /* Set audio settings */
     
     // Initialize tracks.
-    project->tracks = 0; /* Set the tracks to a null pointer */
-    project->master = 0; /* Set the master to a null pointer */
+    Track *track = add_track(project, "Track 1", AUDIO_TRACK, 0.5 /* Volume */, 0.5 /* Pan */); /* Create a track */
+    Track real_track = *track;
 }
+
+void free_project(Project *project) {
+    /* Freeing project memory at exit is not required (but supposedly a good practice), but will be required when opening/creating a new project */
+    free_tracks(project); /* Free track memory */
+} 
+

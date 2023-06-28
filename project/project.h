@@ -16,10 +16,10 @@
  *  -> The "Track *tracks;" property will be a pointer to the first track in the linked list.
  *  -> The "Track *master;" will be a pointer to the master track, which will provide audio output.
 */
-/* Note to future self: DO NOT FORGET TO FREE TRACK MEMORY DURING CLEANUP */
+/* Is freeing memory during clean up really nessecary? Research on this. */
 
 /* Basic definition of project object */
-typedef struct Track {} Track;
+typedef struct Track Track;
 typedef struct Project {
     char *name; /* Filename */
     char *path; /* Filepath (with name) */

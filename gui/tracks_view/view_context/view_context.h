@@ -5,7 +5,7 @@
 #ifndef VIEWCONTEXT_H /* Header Guard */
 #define VIEWCONTEXT_H
 #include "../../../project/project.h"
-
+#include "track_state.h"
 /* Simple enum for playback state */
 typedef enum view_state {PLAY, PAUSE, RECORD} view_state;
 
@@ -13,5 +13,6 @@ typedef enum view_state {PLAY, PAUSE, RECORD} view_state;
 typedef struct ViewContext {
     Project *project; /* Pointer to project */
     view_state state; /* Playing/paused/recording */
+    TrackState* tracks; /* Linked list of track states */ 
 } ViewContext;
 #endif
