@@ -17,9 +17,10 @@ TrackState *add_track_state(ViewContext *view_context, TrackState *prev, Track *
     track_state->prev = prev; /* Previous item */
     if (prev) prev->next = track_state; /* Add it to linked list */
     track_state->next = 0;
+    track_state->track = track; /* Link to original track */
     // Set properties.
-    track_state->volume = gtk_adjustment_new(track->volume, 0.0, 1.0, 0, 0, 0); /* Create the volume adjustment, that holds the volume and handles updates */
-    track_state->pan = gtk_adjustment_new(track->pan, 0.0, 1.0, 0, 0, 0); /* Create the pan adjustmen, that holds the pan and handles updates */
+    track_state->volume = gtk_adjustment_new(track->volume, 0.0, 1.0, 0, 1, 0); /* Create the volume adjustment, that holds the volume and handles updates */
+    track_state->pan = gtk_adjustment_new(track->pan, 0.0, 1.0, 0, 1, 0); /* Create the pan adjustmen, that holds the pan and handles updates */
     // Booleans
     /* You know what? just deal with that later */
     track_state->mute = gtk_adjustment_new(track->mute, 0, 1, 1, 0, 0); /* Can either be 0 or 1, and is for holding a universal value */

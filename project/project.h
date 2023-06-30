@@ -29,5 +29,6 @@ typedef struct Project {
 } Project;
 
 /* All non-related includes here (meaning not referenced in this header) */
+#include "tracks/tracks.h"
 #include "init_project.h"
 #endif

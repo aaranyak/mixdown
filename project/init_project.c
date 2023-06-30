@@ -5,7 +5,6 @@
 */
 // Author: Aaranyak Ghosh
 #include "project.h"
-#include "tracks/tracks.h"
 #include <stdlib.h>
 
 void init_project(Project *project) {
@@ -28,8 +27,13 @@ void init_project(Project *project) {
     project->project_settings.audio_settings = audio_settings; /* Set audio settings */
     
     // Initialize tracks.
-    Track *track = add_track(project, "Track 1", AUDIO_TRACK, 0.5 /* Volume */, 0.5 /* Pan */); /* Create a track */
-    Track real_track = *track;
+    Track *master = add_track(project, "Master", MIX_TRACK, 0.75  /* Volume */, 0.5 /* Pan */); /* Create a track */
+    Track *track1 = add_track(project, "Drums - Amu", AUDIO_TRACK, 0.7 /* Volume */, 0.5 /* Pan */); /* Create another track */
+    Track *track2 = add_track(project, "Lead Guitar - Aaranyak", AUDIO_TRACK, 0.8 /* Volume */, 0.5 /* Pan */); /* Create another track */
+    Track *track3 = add_track(project, "Rythm Guitar - Aaranyak", AUDIO_TRACK, 0.6 /* Volume */, 0.5 /* Pan */); /* Create another track */
+    Track *track4 = add_track(project, "Bass - Aaranyak", AUDIO_TRACK, 0.5 /* Volume */, 0.5 /* Pan */); /* Create another track */
+    
+    project->master = master; /* Set the first track to master */
 }
 
 void free_project(Project *project) {
