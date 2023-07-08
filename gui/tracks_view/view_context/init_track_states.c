@@ -11,6 +11,10 @@ void link_adj_to_float(GtkAdjustment *value, float *link) {
     *link = (float)gtk_adjustment_get_value(value); /* Update the value of the linked field */
 }
 
+void link_adj_to_bool(GtkAdjustment *value, char *link) {
+    /* Link a float to an adjustment, so it changes with the adjustment */
+    *link = (char)gtk_adjustment_get_value(value); /* Update the value of the linked field */
+}
 TrackState *add_track_state(ViewContext *view_context, TrackState *prev, Track *track) {
     /* Creates a trackstate object and adds it to the viewcontext */
     TrackState *track_state = (TrackState*)malloc(sizeof(TrackState)); /* Create trackstate object */
@@ -19,16 +23,21 @@ TrackState *add_track_state(ViewContext *view_context, TrackState *prev, Track *
     track_state->next = 0;
     track_state->track = track; /* Link to original track */
     // Set properties.
-    track_state->volume = gtk_adjustment_new(track->volume, 0.0, 1.0, 0, 1, 0); /* Create the volume adjustment, that holds the volume and handles updates */
-    track_state->pan = gtk_adjustment_new(track->pan, 0.0, 1.0, 0, 1, 0); /* Create the pan adjustmen, that holds the pan and handles updates */
+    track_state->volume = gtk_adjustment_new(track->volume, 0.0, 1.0, 0, 0.1, 0); /* Create the volume adjustment, that holds the volume and handles updates */
+    track_state->pan = gtk_adjustment_new(track->pan, 0.0, 1.0, 0, 0.1, 0); /* Create the pan adjustmen, that holds the pan and handles updates */
     // Booleans
-    /* You know what? just deal with that later */
     track_state->mute = gtk_adjustment_new(track->mute, 0, 1, 1, 0, 0); /* Can either be 0 or 1, and is for holding a universal value */
-    
+    track_state->solo = gtk_adjustment_new(track->solo, 0, 1, 1, 0, 0); /* Can either be 0 or 1, and is for holding a universal value */
+    track_state->record = gtk_adjustment_new(track->record, 0, 1, 1, 0, 0); /* Can either be 0 or 1, and is for holding a universal value */
+     
     // Connect properties
     g_signal_connect(track_state->volume, "value-changed", G_CALLBACK(link_adj_to_float), &(track->volume)); /* Link the track state volume to the pointer to the actual track volume */
     g_signal_connect(track_state->pan, "value-changed", G_CALLBACK(link_adj_to_float), &(track->pan)); /* Link the track state pan to the pointer to the actual track pan */
-
+    // Connect Booleans
+    g_signal_connect(track_state->mute, "value-changed", G_CALLBACK(link_adj_to_bool), &(track->mute)); /* Will change the value of the original is_muted in the track in the project */
+    g_signal_connect(track_state->solo, "value-changed", G_CALLBACK(link_adj_to_bool), &(track->solo)); /* Same as above */
+    g_signal_connect(track_state->record, "value-changed", G_CALLBACK(link_adj_to_bool), &(track->record)); 
+    
     return track_state;
 }
 

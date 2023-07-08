@@ -13,6 +13,10 @@ typedef enum view_state {PLAY, PAUSE, RECORD} view_state;
 typedef struct ViewContext {
     Project *project; /* Pointer to project */
     view_state state; /* Playing/paused/recording */
-    TrackState* tracks; /* Linked list of track states */ 
+    TrackState* tracks; /* Linked list of track states */
+    unsigned int playhead; /* Playhead position (in samples) */
+    unsigned int cursor; /* Cursor position (Ditto) */
+    GtkAdjustment *scale; /* This is the value of how zoomed in the view is. (samples per pixel) */
+    GtkAdjustment *scroll; /* in samples, not pixels */
 } ViewContext;
 #endif

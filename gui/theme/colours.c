@@ -26,9 +26,16 @@ void bg_colour_track_mix(GtkWidget **widget, GtkStateFlags state) {
 }
 
 // Record Button (Red)
-void fg_colour_rec(GtkWidget** widget, GtkStateFlags state) {
+void fg_colour_rec(GtkWidget **widget, GtkStateFlags state) {
     /* Changes the icon colour of the widget to record red */
     GdkRGBA colour;
     gdk_rgba_parse(&colour, "#a11813");
     gtk_widget_override_color(*widget, state, &colour); /* Change colour of widget */
+}
+// Record button background
+void bg_colour_rec(GtkWidget **widget, GtkStateFlags state) {
+    /* Changes the icon colour of the widget to record red */
+    GdkRGBA colour;
+    gdk_rgba_parse(&colour, "#a6615a");
+    gtk_widget_override_background_color(*widget, state, &colour); /* Change colour of widget */
 }

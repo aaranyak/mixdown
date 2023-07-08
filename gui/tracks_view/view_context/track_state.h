@@ -18,6 +18,8 @@ typedef struct TrackState {
     GtkAdjustment *mute;
     GtkAdjustment *solo;
     GtkAdjustment *record;
+    // Associated widgets
+    GtkWidget *region_editor; /* The region editor of this track */
 } TrackState;
 
 #endif

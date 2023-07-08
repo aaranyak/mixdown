@@ -8,10 +8,11 @@
  *  -> Record
 */
 #include <gtk/gtk.h>
+#include <string.h>
 #include "../view_context/view_context.h" /* This contains the state manager widget */
+#include "../../components/components.h" /* Contains small but useful gui components */
 #include "../../../project/project.h" /* Contains project and track definitions */
 #include "../../theme/theme.h" /* background and foreground colours */
-#include "string.h"
 GtkWidget *create_track_cell(ViewContext *view_context, TrackState *track_state) {
     /* Returns the track cell widget which has all the controls */
     
@@ -25,7 +26,10 @@ GtkWidget *create_track_cell(ViewContext *view_context, TrackState *track_state)
     //Items
     GtkWidget *label; /* Label Text */
     GtkWidget *volume_slider; /* Connected to the volume adjustment */
-    // Well, that's about it for now, we'll do the rest later.
+    
+    GtkWidget *mute_button; /* A toggle button with icon, connected to the mute adjustment */
+    GtkWidget *solo_button; /* Ditto, but connected to the solo adjustment */
+    GtkWidget *record_button; /* Ditto */
     
     // Create Widgets
     cell = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0); /* Add a little bit of padding */
@@ -37,10 +41,15 @@ GtkWidget *create_track_cell(ViewContext *view_context, TrackState *track_state)
     else sprintf(label_text, track_state->track->name); /* Otherwise, set it to just the name */
     label = gtk_label_new(label_text); /* Label text will be the name of the track */
     volume_slider = gtk_scale_new(GTK_ORIENTATION_HORIZONTAL, track_state->volume); /* Create a volume slider. The adjustment is holds the value, that is stored in the track state */
-
+    
+    // Boolean Buttons
+    mute_button = toggle_icon_button(track_state->mute, "audio-volume-muted-symbolic"); /* Icon button which is connected to the mute adjustment */
+    solo_button = toggle_icon_button(track_state->solo, "audio-headphones-symbolic"); /* Icon button which is connected to the mute adjustment */
+    if (track_state->track->type != MIX_TRACK) record_button = toggle_icon_button(track_state->record, "media-record"); /* Icon button which is connected to the mute adjustment, also cannot record mix tracks */
+    
     // Style & Size widgets
     // Sizing
-    gtk_widget_set_size_request(cell, -1, 100); /* 100px tall */
+    gtk_widget_set_size_request(cell, -1, 109); /* 100px tall */
     gtk_widget_set_size_request(volume_slider, -1, -1); /* Use maximum size */
     // Styling
     if (track_state->track->type == MIX_TRACK) bg_colour_track_mix(&cell, GTK_STATE_FLAG_NORMAL); /* Set the cell to mix track colour, if it is a mix track */
@@ -49,8 +58,17 @@ GtkWidget *create_track_cell(ViewContext *view_context, TrackState *track_state)
     
     gtk_scale_set_digits(GTK_SCALE(volume_slider), 4); /* Rounded off to four decimal places */
     gtk_scale_set_draw_value(GTK_SCALE(volume_slider), 0); /* Do not display volume value */
+    
+    // Add colours to buttons
+    if (track_state->track->type != MIX_TRACK) fg_colour_rec(&record_button, GTK_STATE_FLAG_NORMAL); /* Change colour of record icon to red */
+    if (track_state->track->type != MIX_TRACK) bg_colour_rec(&record_button, GTK_STATE_FLAG_NORMAL); /* Change colour of record button to red when clicked */
     // Pack Widgets
     gtk_box_pack_start(GTK_BOX(top_row), label, 0, 0, 10 /* 10px padding */); /* Pack the label into the top row */
+    
+    gtk_box_pack_end(GTK_BOX(top_row), mute_button, 0, 0, 10 /* 10px padding */); /* Pack the label into the top row */
+    gtk_box_pack_end(GTK_BOX(top_row), solo_button, 0, 0, 10 /* 10px padding */); /* Pack the label into the top row */
+    if (track_state->track->type != MIX_TRACK) gtk_box_pack_end(GTK_BOX(top_row), record_button, 0, 0, 10 /* 10px padding */); /* Pack the label into the top row */
+    
     gtk_box_pack_start(GTK_BOX(cell), top_row, 0, 0, 10 /* Ditto */); /* Pack the top row into the cell */
     
     gtk_box_pack_start(GTK_BOX(bottom_row), volume_slider, 1, 1 /* Use maxium size */, 20 /* 20px padding */); /* Pack the volume slider into the bottom row */
@@ -60,7 +78,6 @@ GtkWidget *create_track_cell(ViewContext *view_context, TrackState *track_state)
 }
 
 void *load_track_editor(ViewContext *view_context, GtkWidget **track_editor) {
-    /* Work on this till 6:30 then remember to go cycling for atleast 1:30 hours */
     /* This will load all the track data from the project and display them as track editing cells.
      * The GtkWidget **track_editor will be the parent widget of the tracks.
      *

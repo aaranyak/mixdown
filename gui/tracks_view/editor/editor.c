@@ -4,6 +4,7 @@
 #include "../../../project/project.h"
 #include "../view_context/view_context.h"
 #include "track_editor.h"
+#include "region_editor.h"
 // Author - Aaranyak Ghosh
 
 GtkWidget *tracks_editor(ViewContext *view_context) {
@@ -20,8 +21,8 @@ GtkWidget *tracks_editor(ViewContext *view_context) {
     
     // Format widgets
     load_track_editor(view_context, &track_editor); /* Load tracks into track editor */
+    load_region_editor(view_context, &region_editor); /* Load region editor rows into the editor */
     gtk_widget_set_size_request(track_editor, 300, -1); /* Set minimum size of the left side widget */
-    
     // Pack Widgets
     gtk_paned_pack1(GTK_PANED (editor), track_editor, 0, 0);
     gtk_paned_pack2(GTK_PANED (editor), region_editor, 1 /* Will expand */, 0);

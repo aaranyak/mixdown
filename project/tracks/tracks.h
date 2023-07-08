@@ -32,7 +32,11 @@ typedef struct Track {
     Track *prev; /* Pointer to previous track in list (Null if beginning of list) */
     Track *next; /* Pointer to next track (Null if end) */
     TrackType type; /* audio/midi/mix track (midi will probably not be implemented in this version) */
-    Region *regions; /* Linked list of regions */
+    Region *regions; /* Linked list of regions (if audio track) */
+    // Only for mix track
+    int num_tracks; /* Number of tracks to mix */
+    Track **mix_tracks; /* Pointer array of pointers to tracks to mix (if mix track) */
+    
     // Track Settings
     float volume;
     float pan;
@@ -40,7 +44,6 @@ typedef struct Track {
     char mute;
     char solo;
     char record;
-    // Add other stuff here:
 } Track;
 #include "track_utils.h"
 #endif
