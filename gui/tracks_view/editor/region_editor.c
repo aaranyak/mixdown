@@ -27,6 +27,24 @@ gboolean scroll_regions(GtkOverlay *editor_row, GdkEventScroll *event, ViewConte
             gtk_adjustment_set_value(view_context->scroll, scroll); /* Set the scroll */
         }
     }
+
+    // Handle Zooming
+    else if (event->state & GDK_CONTROL_MASK) {
+        /* Control+Scroll - Zooming */
+        int zoom_amount = view_context->project->project_settings.audio_settings.comp_unit / 24; /* Zoom Amount (in normal situations) */
+        if (event->direction) {
+            /* Zoom out */
+            int zoom = gtk_adjustment_get_value(view_context->scale); /* Get current zoom value */
+            zoom += zoom_amount;
+            gtk_adjustment_set_value(view_context->scale, zoom); /* Set the zoom */
+        }
+        else {
+            /* Zoom out */
+            int zoom = gtk_adjustment_get_value(view_context->scale); /* Get current zoom value */
+            zoom -= zoom_amount;
+            gtk_adjustment_set_value(view_context->scale, zoom); /* Set the zoom */
+        }
+    }
     return 0;
 }
 

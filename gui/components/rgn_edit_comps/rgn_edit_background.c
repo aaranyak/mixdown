@@ -80,5 +80,6 @@ GtkWidget *region_editor_background(ViewContext *view_context, char odd_even /* 
     
     // Update background signals
     g_signal_connect(view_context->scroll, "value-changed", G_CALLBACK(redraw_on_update), background); /* Redraw background when scroll changes */
+    g_signal_connect(view_context->scale, "value-changed", G_CALLBACK(redraw_on_update), background); /* Redraw background when zooming */
     return background;
 }
