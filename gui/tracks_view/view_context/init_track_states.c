@@ -38,6 +38,8 @@ TrackState *add_track_state(ViewContext *view_context, TrackState *prev, Track *
     g_signal_connect(track_state->solo, "value-changed", G_CALLBACK(link_adj_to_bool), &(track->solo)); /* Same as above */
     g_signal_connect(track_state->record, "value-changed", G_CALLBACK(link_adj_to_bool), &(track->record)); 
     
+    // Connect the track state to the track
+    track->state_manager = track_state;
     return track_state;
 }
 

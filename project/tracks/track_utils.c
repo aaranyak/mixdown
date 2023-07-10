@@ -47,6 +47,12 @@ Track *add_track(Project *project,
     track->solo = 0;
     track->record = 0;
     track->regions = 0; /* Track is created empty (no regions) */
+    
+    // For mix tracks only
+    if (type == MIX_TRACK) {
+        track->num_tracks = 0; /* Set number of tracks to mix to 0 */
+        track->mix_tracks = 0; /* No tracks added to mix yet */
+    }
     // Insert track in list
     if (last_item) { /* If list is not empty */
         last_item->next = track; /* Insert track after last item */
@@ -61,6 +67,7 @@ void free_tracks(Project *project) {
     Track *item = project->tracks; /* Current item in list */
     while (item) { /* If the list is not empty */
         Track *next_item = item->next;
+        if (item->type == MIX_TRACK) if (item->num_tracks) free(item->mix_tracks); /* Free the mix list if it is not empty and if track is mix track */
         free(item);
         item = next_item;
     }

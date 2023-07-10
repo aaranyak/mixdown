@@ -16,7 +16,7 @@ S_GUI_THEME = gui/theme/colours.c gui/theme/fonts.c # Source files for theme
 S_GUI = $(S_GUI_THEME) $(S_GUI_COMPONENTS) $(S_GUI_TRACKSVIEW) $(S_GUI_WINDOWS) # Gui source files
 
 #Project Source
-S_PROJECT_TRACKS = project/tracks/track_utils.c
+S_PROJECT_TRACKS = project/tracks/track_utils.c project/tracks/mix_track_utils.c
 S_PROJECT = project/init_project.c $(S_PROJECT_TRACKS)
 
 SOURCES = main.c $(S_GUI) $(S_PROJECT) # All source files

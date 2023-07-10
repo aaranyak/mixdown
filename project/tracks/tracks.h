@@ -26,6 +26,7 @@
  *  -> A region can be moved behind the previous one, or ahead the one it's before, but the list will have to be reordered this happens
  */
 typedef struct Track Track; /* Forward declaration */
+typedef struct TrackState TrackState; /* Forward declaration */
 typedef struct Track {
     // Essentials
     char name[128]; /* Track name is not a pointer, to save memory cleanup */
@@ -33,6 +34,8 @@ typedef struct Track {
     Track *next; /* Pointer to next track (Null if end) */
     TrackType type; /* audio/midi/mix track (midi will probably not be implemented in this version) */
     Region *regions; /* Linked list of regions (if audio track) */
+    TrackState *state_manager; /* Pointer to the track state manager (ought to be useful later on) */
+
     // Only for mix track
     int num_tracks; /* Number of tracks to mix */
     Track **mix_tracks; /* Pointer array of pointers to tracks to mix (if mix track) */
@@ -46,4 +49,5 @@ typedef struct Track {
     char record;
 } Track;
 #include "track_utils.h"
+#include "mix_track_utils.h"
 #endif
