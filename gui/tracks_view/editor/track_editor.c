@@ -91,10 +91,12 @@ void *load_track_editor(ViewContext *view_context, GtkWidget **track_editor) {
         GtkWidget *track_cell; /* The track controls cell */
         // Create Widgets
         track_cell = create_track_cell(view_context, track_state); /* Load the track cell gui */
+        track_state->track_cell = track_cell; /* Set the track cell object */
         current_separator = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL); /* Create a separator between cells */
         // Pack Widgets
         gtk_box_pack_start(GTK_BOX(*track_editor), track_cell, 0, 0, 0); /* Pack the track cell into the editor */
         if (track_state->next) gtk_box_pack_start(GTK_BOX(*track_editor), current_separator, 0, 0, 0); /* Pack the separator into the editor */
+        track_state->track_cell = track_cell; /* Link this widget to the TrackState */
         // Move on to next track
         track_state = track_state->next;
     }

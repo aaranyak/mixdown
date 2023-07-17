@@ -8,6 +8,15 @@
 #include <gtk/gtk.h>
 #include "../../tracks_view/view_context/view_context.h"
 #include "../../theme/theme.h"
+#include "../../tracks_view/editor/editor_actions/editor_actions.h" // Debugging
+
+void test_add_track(GtkButton *play_button, ViewContext *view_context) {
+    /* Testing adding a new track */
+    TrackType type;
+    if (rand() & 1) type = MIX_TRACK;
+    else type = AUDIO_TRACK;
+    create_new_track(view_context, "Eshy is a guinea pig", type);
+}
 
 GtkWidget *back_button(ViewContext *view_context) {
     /* Returns back button widget */
@@ -31,7 +40,9 @@ GtkWidget *play_button(ViewContext *view_context) {
     gtk_widget_set_size_request(play_button, 40, 40); /* Set size of button to 40x40px */
     play_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0); /* Create button container (for sizing button) */
     gtk_box_pack_start(GTK_BOX(play_box), play_button, 1 /* Expand = True (button centered vertcially) */, 0, 0); /* Add the button to the button container */
-
+    
+    // Debugging
+    g_signal_connect(play_button, "clicked", G_CALLBACK(test_add_track), view_context); /* Testing adding new tracks */
     return play_box;
 }
 

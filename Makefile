@@ -9,8 +9,9 @@ S_GUI_COMPONENTS_REGIONEDITOR = gui/components/rgn_edit_comps/rgn_edit_backgroun
 S_GUI_COMPONENTS = $(S_GUI_COMPONENTS_CONTROLPANEL) $(S_GUI_COMPONENTS_TRACKEDITOR) $(S_GUI_COMPONENTS_REGIONEDITOR)
 S_GUI_WINDOWS = gui/windows/project_window.c # All app window source files
 #Gui tracks view source
-S_GUI_TRACKSVIEW_VIEWCONTEXT = gui/tracks_view/view_context/initialize_context.c gui/tracks_view/view_context/init_track_states.c # All tracks_view state control files
-S_GUI_TRACKSVIEW_EDITOR = gui/tracks_view/editor/editor.c gui/tracks_view/editor/track_editor.c gui/tracks_view/editor/region_editor.c# Source files for the track editor 
+S_GUI_TRACKSVIEW_VIEWCONTEXT = gui/tracks_view/view_context/initialize_context.c gui/tracks_view/view_context/track_state_utils.c # All tracks_view state control files
+S_TRACKSVIEW_EDITOR_EDITORACTIONS = gui/tracks_view/editor/editor_actions/create_new_track.c
+S_GUI_TRACKSVIEW_EDITOR = gui/tracks_view/editor/editor.c gui/tracks_view/editor/track_editor.c gui/tracks_view/editor/region_editor.c gui/tracks_view/editor/mix_editor_row.c $(S_TRACKSVIEW_EDITOR_EDITORACTIONS) # Source files for the track editor 
 S_GUI_TRACKSVIEW = gui/tracks_view/tracks_view.c gui/tracks_view/control_panel.c $(S_GUI_TRACKSVIEW_VIEWCONTEXT) $(S_GUI_TRACKSVIEW_EDITOR) #source files for tracks view
 S_GUI_THEME = gui/theme/colours.c gui/theme/fonts.c # Source files for theme
 S_GUI = $(S_GUI_THEME) $(S_GUI_COMPONENTS) $(S_GUI_TRACKSVIEW) $(S_GUI_WINDOWS) # Gui source files
@@ -22,4 +23,4 @@ S_PROJECT = project/init_project.c $(S_PROJECT_TRACKS)
 SOURCES = main.c $(S_GUI) $(S_PROJECT) # All source files
 
 all: $(SOURCES)
-	$(CC) $(CFLAGS) -o $(NAME) $(SOURCES) $(LDFLAGS)
+	$(CC) -no-pie $(CFLAGS) -o $(NAME) $(SOURCES) $(LDFLAGS)

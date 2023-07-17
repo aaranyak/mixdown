@@ -6,6 +6,8 @@
 #define VIEWCONTEXT_H
 #include "../../../project/project.h"
 #include "track_state.h"
+#include <gtk/gtk.h>
+
 /* Simple enum for playback state */
 typedef enum view_state {PLAY, PAUSE, RECORD} view_state;
 
@@ -18,5 +20,8 @@ typedef struct ViewContext {
     unsigned int cursor; /* Cursor position (Ditto) */
     GtkAdjustment *scale; /* This is the value of how zoomed in the view is. (samples per pixel) */
     GtkAdjustment *scroll; /* in samples, not pixels */
+    // Gui Components
+    GtkWidget *track_editor; /* Gui component for track editor panel */
+    GtkWidget *region_editor; /* Region editor panel */
 } ViewContext;
 #endif

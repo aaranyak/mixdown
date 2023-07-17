@@ -20,7 +20,8 @@ typedef struct TrackState {
     GtkAdjustment *record;
     // Associated widgets
     GtkWidget *region_editor; /* The region editor of this track */
+    GtkWidget *track_cell; /* The track cell of this track */
 } TrackState;
-
+#include "track_state_utils.h"
 #endif
 

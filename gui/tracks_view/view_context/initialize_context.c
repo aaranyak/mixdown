@@ -1,7 +1,6 @@
 /* Contains function for initializing tracks view state */
 #include "view_context.h"
 #include "stdio.h"
-#include "init_track_states.h"
 #include <gtk/gtk.h>
 // Author: Aaranyak Ghosh
 void init_context(ViewContext *view_context, Project *project) {

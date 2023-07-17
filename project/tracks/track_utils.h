@@ -8,5 +8,6 @@ Track *add_track(Project *project,
                  TrackType type,
                  float volume,
                  float pan);
+void delete_track(Project *project, Track *track);
 void free_tracks(Project *project);
 #endif

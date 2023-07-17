@@ -62,6 +62,20 @@ Track *add_track(Project *project,
     return track;
 }
 
+void delete_track(Project *project, Track *track) {
+    /* Deletes a track from a project, and frees the track's memory */
+    // Update the previoous track in the chain
+    if (track->prev) {
+        track->prev->next = track->next; /* Clear the link from the previous track in the chain, and sets it to then next */
+    } else {
+        project->tracks = track->next; /* If ths is the first track, the project's first track link is pushed up */
+    }
+    // Update the next track in the chain
+    if (track->next) track->next->prev = track->prev; /* Sets the previous track of the next track in the chain to this track's previous, thereby removing the track entirely from the chain */
+    // Free memory
+    free(track); /* Let's try this and see if it works */
+}
+
 void free_tracks(Project *project) {
     /* Frees track memory */
     Track *item = project->tracks; /* Current item in list */
