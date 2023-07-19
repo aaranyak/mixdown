@@ -4,7 +4,7 @@ CFLAGS = -pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/i
 LDFLAGS = -lm -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -lharfbuzz -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lasound
 #Gui Source
 S_GUI_COMPONENTS_CONTROLPANEL = gui/components/control_panel/control_buttons.c gui/components/control_panel/tempo_setter.c
-S_GUI_COMPONENTS_TRACKEDITOR = gui/components/trk_edit_comps/toggle_icon_button.c
+S_GUI_COMPONENTS_TRACKEDITOR = gui/components/trk_edit_comps/toggle_icon_button.c gui/components/trk_edit_comps/create_track_popup.c
 S_GUI_COMPONENTS_REGIONEDITOR = gui/components/rgn_edit_comps/rgn_edit_background.c
 S_GUI_COMPONENTS = $(S_GUI_COMPONENTS_CONTROLPANEL) $(S_GUI_COMPONENTS_TRACKEDITOR) $(S_GUI_COMPONENTS_REGIONEDITOR)
 S_GUI_WINDOWS = gui/windows/project_window.c # All app window source files
@@ -23,4 +23,4 @@ S_PROJECT = project/init_project.c $(S_PROJECT_TRACKS)
 SOURCES = main.c $(S_GUI) $(S_PROJECT) # All source files
 
 all: $(SOURCES)
-	$(CC) -no-pie $(CFLAGS) -o $(NAME) $(SOURCES) $(LDFLAGS)
+	$(CC) -no-pie -Wno-deprecated-declarations $(CFLAGS) -o $(NAME) $(SOURCES) $(LDFLAGS)

@@ -36,9 +36,9 @@ GtkWidget *create_track_cell(ViewContext *view_context, TrackState *track_state)
     top_row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0); /* Also useful for sizing label */
     bottom_row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0); /* We'll add more widgets here once we have decided what we'll put here */
     
-    char label_text[128];
+    char label_text[134];
     if (track_state->track->type == MIX_TRACK) sprintf(label_text, "%s (Mix)", track_state->track->name); /* If this is a mix track, add (Mix) to the label */
-    else sprintf(label_text, track_state->track->name); /* Otherwise, set it to just the name */
+    else sprintf(label_text, "%s", track_state->track->name); /* Otherwise, set it to just the name */
     label = gtk_label_new(label_text); /* Label text will be the name of the track */
     volume_slider = gtk_scale_new(GTK_ORIENTATION_HORIZONTAL, track_state->volume); /* Create a volume slider. The adjustment is holds the value, that is stored in the track state */
     
