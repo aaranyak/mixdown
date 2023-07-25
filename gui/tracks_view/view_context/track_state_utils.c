@@ -87,6 +87,16 @@ void init_track_states(ViewContext *view_context) {
     }
 }
 
+void delete_track_state(ViewContext *view_context, TrackState *track_state) {
+    /* Deletes a trackstate from the view context */
+    // update the previous track state
+    // Remove from linked list
+    if (track_state->prev) track_state->prev->next = track_state->next; /* If this is not the first track, update the previous track in linked list */
+    else view_context->tracks = track_state->next; /* Otherwise, update the view context */
+    if (track_state->next) track_state->next->prev = track_state->prev; /* If not the last track, update the next track in list */
+    free(track_state); /* Free the track state memory */
+}
+
 void free_track_states(ViewContext *view_context) {
     /* Frees track state memory */
     TrackState *item = view_context->tracks; /* Current item in list */

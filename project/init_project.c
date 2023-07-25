@@ -31,7 +31,7 @@ void init_project(Project *project) {
     Track *track1 = add_track(project, "Drums - Amu", AUDIO_TRACK, 0.7 /* Volume */, 0.5 /* Pan */); /* Create another track */
     Track *track2 = add_track(project, "Lead Guitar - Aaranyak", AUDIO_TRACK, 0.8 /* Volume */, 0.5 /* Pan */); /* Create another track */
     Track *track3 = add_track(project, "Rythm Guitar - Aaranyak", AUDIO_TRACK, 0.6 /* Volume */, 0.5 /* Pan */); /* Create another track */
-    Track *track4 = add_track(project, "Bass - Aaranyak", AUDIO_TRACK, 0.5 /* Volume */, 0.5 /* Pan */); /* Create another track */
+    Track *track4 = add_track(project, "Bass - Aaranyak", AUDIO_TRACK, 0.5 /* Volume */, 0.5 /* Pan */); /* Create another track */ 
     
     // Add tracks to the mix list of master.
     add_track_to_mix(master, track2); /* Add the second track to the mix list of master */

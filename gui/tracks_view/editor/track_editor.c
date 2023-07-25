@@ -62,6 +62,10 @@ GtkWidget *create_track_cell(ViewContext *view_context, TrackState *track_state)
     // Add colours to buttons
     if (track_state->track->type != MIX_TRACK) fg_colour_rec(&record_button, GTK_STATE_FLAG_NORMAL); /* Change colour of record icon to red */
     if (track_state->track->type != MIX_TRACK) bg_colour_rec(&record_button, GTK_STATE_FLAG_NORMAL); /* Change colour of record button to red when clicked */
+    
+    // Connect Signals
+    track_rclick_signal_connect(&cell, view_context, track_state); /* When cell is right clicked, open context menu */
+    
     // Pack Widgets
     gtk_box_pack_start(GTK_BOX(top_row), label, 0, 0, 10 /* 10px padding */); /* Pack the label into the top row */
     
