@@ -22,7 +22,7 @@ GtkWidget *create_track_cell(ViewContext *view_context, TrackState *track_state)
     GtkWidget *cell; /* Container for everything */
     GtkWidget *top_row; /* Contains label */
     GtkWidget *bottom_row; /* Contains volume control, etc */
-    
+    GtkWidget *event_detector; /* Detects clicks */
     //Items
     GtkWidget *label; /* Label Text */
     GtkWidget *volume_slider; /* Connected to the volume adjustment */
@@ -32,6 +32,7 @@ GtkWidget *create_track_cell(ViewContext *view_context, TrackState *track_state)
     GtkWidget *record_button; /* Ditto */
     
     // Create Widgets
+    event_detector = gtk_event_box_new(); /* Create an event box */
     cell = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0); /* Add a little bit of padding */
     top_row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0); /* Also useful for sizing label */
     bottom_row = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0); /* We'll add more widgets here once we have decided what we'll put here */
@@ -64,7 +65,7 @@ GtkWidget *create_track_cell(ViewContext *view_context, TrackState *track_state)
     if (track_state->track->type != MIX_TRACK) bg_colour_rec(&record_button, GTK_STATE_FLAG_NORMAL); /* Change colour of record button to red when clicked */
     
     // Connect Signals
-    track_rclick_signal_connect(&cell, view_context, track_state); /* When cell is right clicked, open context menu */
+    track_rclick_signal_connect(&event_detector, view_context, track_state); /* When cell is right clicked, open context menu */
     
     // Pack Widgets
     gtk_box_pack_start(GTK_BOX(top_row), label, 0, 0, 10 /* 10px padding */); /* Pack the label into the top row */
@@ -77,8 +78,9 @@ GtkWidget *create_track_cell(ViewContext *view_context, TrackState *track_state)
     
     gtk_box_pack_start(GTK_BOX(bottom_row), volume_slider, 1, 1 /* Use maxium size */, 20 /* 20px padding */); /* Pack the volume slider into the bottom row */
     gtk_box_pack_end(GTK_BOX(cell), bottom_row, 0, 0, 10 /* 20px padding */); /* Pack the bottom row into the cell */
+    gtk_container_add(GTK_CONTAINER(event_detector), cell); /* Add the cell to the event detector box */
 
-    return cell;
+    return event_detector;
 }
 
 void *load_track_editor(ViewContext *view_context, GtkWidget **track_editor) {

@@ -16,9 +16,14 @@ struct tcm_event_data { /* Data to send to the event to create context menu */
     TrackState *track_state;
 };
 
-gboolean launch_popup_signal(GtkWidget *track_cell, GdkEventButton *event, struct tcm_event_data data) {
+void create_track_context_menu(ViewContext *view_context, TrackState *track_state, GdkEvent *event); /* Forward decleration */
+
+gboolean launch_popup_signal(GtkWidget *track_cell, GdkEventButton *event, struct tcm_event_data *data) {
     /* On right click, launch context menu */
-    printf("Naa na na boo boo, I was just tricking you!\n"); /* Debugging */
+    if (event->button == 3) { /* If right click */
+        create_track_context_menu(data->view_context, data->track_state, (GdkEvent*)event); /* Launch popup menu */
+        return 1; /* Block other responses */
+    }
     return 0;
 }
 
